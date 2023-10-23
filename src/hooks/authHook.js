@@ -102,7 +102,7 @@ export const useAuth = ({ middleware, url }) => {
 
             localStorage.removeItem("token")
 
-            await mutate(undefined)
+            mutate('/api/user', null)
 
         } catch (error) {
             console.log(error)
