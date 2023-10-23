@@ -27,14 +27,14 @@ export const useAuth = ({ middleware, url }) => {
         });
 
     useEffect(() => {
-       
+
         if (middleware === "auth" && user && user.admin === 0) {
             navigate.push("/citas");
         }
         if (middleware === "guest" && user && url && user.admin === 0) {
             navigate.push(url);
         }
-        if (middleware && user  && user.admin === 1) {
+        if (middleware && user && user.admin === 1) {
             navigate.push("/dashboard/citas");
         }
         if (error && middleware === "auth") {
@@ -61,17 +61,13 @@ export const useAuth = ({ middleware, url }) => {
 
     const login = async (data, setErrors) => {
 
-        try {
-            const res = await clienteAxios.post("/api/login", data)
-            localStorage.setItem("token", res.data.token)
-            setErrors([])
-            await mutate()
-
-        } catch (error) {
-
-            const errores = Object.values(error.response.data.data);
-            setErrors(errores);
-           
+        clienteAxios
+            .post('/api/login', data)
+            .then((res) => localStorage.setItem("token", res.data.token), mutate())
+            .catch(error => {
+                const errores = Object.values(error.response.data.data);
+                setErrors(errores);
+            })
         }
     }
 
@@ -84,7 +80,7 @@ export const useAuth = ({ middleware, url }) => {
         } catch (error) {
             const errores = Object.values(error.response.data.errors);
             setErrors(errores);
-           
+
         }
 
     }
