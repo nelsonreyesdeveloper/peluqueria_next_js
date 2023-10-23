@@ -31,7 +31,7 @@ export const useAuth = ({ middleware, url }) => {
         if (middleware === "guest" && user && url && user.admin === 0) {
             navigate.push(url);
         }
-        if (middleware === "guest" && user && url && user.admin === 1) {
+        if (middleware === "auth" && user && url && user.admin === 1) {
             navigate.push("/dashboard/citas");
         }
         if (error && middleware === "auth") {
