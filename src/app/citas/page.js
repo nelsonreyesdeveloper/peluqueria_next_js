@@ -23,6 +23,7 @@ const Page = () => {
     ejecutarServicio();
   }, [user])
 
+  console.log(servicios)
   if(servicios.length === 0)  return <p>cargando...</p>
    
   return (
