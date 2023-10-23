@@ -68,8 +68,8 @@ export const useAuth = ({ middleware, url }) => {
                 const errores = Object.values(error.response.data.data);
                 setErrors(errores);
             })
-        }
     }
+
 
     const register = async (data, setErrors) => {
         try {
