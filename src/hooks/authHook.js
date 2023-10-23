@@ -71,9 +71,7 @@ export const useAuth = ({ middleware, url }) => {
 
             const errores = Object.values(error.response.data.data);
             setErrors(errores);
-            setTimeout(() => {
-                setErrors([])
-            }, 10000);
+           
         }
     }
 
@@ -86,9 +84,7 @@ export const useAuth = ({ middleware, url }) => {
         } catch (error) {
             const errores = Object.values(error.response.data.errors);
             setErrors(errores);
-            setTimeout(() => {
-                setErrors([])
-            }, 10000);
+           
         }
 
     }
