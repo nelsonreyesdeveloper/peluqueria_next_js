@@ -25,6 +25,7 @@ export const useAuth = ({ middleware, url }) => {
     });
 
     useEffect(() => {
+        console.log({ middleware, user, url });
         if (middleware === "auth" && user && user.admin === 0) {
             navigate.push("/citas");
         }
