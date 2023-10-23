@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 export const useAuth = ({ middleware, url }) => {
     const navigate = useRouter();
 
-    const token =  localStorage.getItem('token');
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') ?? "" : ""
 
     const { data: user, error, mutate } = useSWR("/api/user", () => clienteAxios.get("/api/user", {
         headers: {
