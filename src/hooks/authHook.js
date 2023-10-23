@@ -9,6 +9,7 @@ export const useAuth = ({ middleware, url }) => {
     const navigate = useRouter();
 
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') ?? "" : ""
+    console.log(token);
 
     const { data: user, error, mutate } = useSWR("/api/user", () => clienteAxios.get("/api/user", {
         headers: {
