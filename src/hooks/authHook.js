@@ -21,7 +21,10 @@ export const useAuth = ({ middleware, url }) => {
 
             navigate.push("/verify-email");
             /* MANEJO DE ERRORES */
-        }));
+        }),
+        {
+            refreshInterval: 0
+        });
 
     useEffect(() => {
        
