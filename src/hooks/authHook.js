@@ -9,23 +9,20 @@ export const useAuth = ({ middleware, url }) => {
     const navigate = useRouter();
 
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') ?? "" : ""
-    console.log(token);
 
-    const { data: user, error, mutate } = useSWR("/api/user", () => clienteAxios.get("/api/user", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
-    }).then(res => res.data)
-        .catch(err => {
-            if (err.response.status !== 403) throw Error(err?.response?.data?.errors);
-
-            navigate.push("/verify-email");
-            /* MANEJO DE ERRORES */
-        }),
-        {
-            refreshInterval: 0
-        });
-
+    const { data: user, error, mutate } = useSWR("/api/user", () =>
+        clienteAxios.get("/api/user", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(res => res.data)
+            .catch(err => {
+                if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
+                navigate.push("/verify-email");
+            }
+            )
+    )
     useEffect(() => {
 
         if (middleware === "auth" && user && user.admin === 0) {

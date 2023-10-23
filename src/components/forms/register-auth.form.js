@@ -31,7 +31,6 @@ export function RegisterAuthForm({ className, ...props }) {
     async function onSubmit(event) {
         event.preventDefault()
         // setIsLoading(true)
-
         if ([email, password, passwordConfirmation, name].includes("")) {
             setErrors([["Todos los campos son obligatorios"]])
             // setIsLoading(false)
