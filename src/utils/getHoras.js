@@ -1,5 +1,5 @@
 import clienteAxios from "@/config/axios"
-
+import Cookies from 'js-cookie'
 export const getHoras = async (fecha) => {
     const res = await clienteAxios.post(`/api/horas`,
         {
@@ -7,7 +7,7 @@ export const getHoras = async (fecha) => {
         },
         {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`
+                Authorization: `Bearer ${Cookies.get('token')}`
             }
         })
 

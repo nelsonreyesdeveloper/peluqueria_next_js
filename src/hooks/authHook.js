@@ -4,40 +4,52 @@ import useSWR from "swr";
 import clienteAxios from "@/config/axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
 
 export const useAuth = ({ middleware, url }) => {
     const navigate = useRouter();
+    // const [token, setToken] = useState(() => typeof window !== 'undefined' ? localStorage.getItem('token') ?? "" : "");
+    const [token, setToken] = useState(Cookies.get('token'));
 
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') ?? "" : ""
+    const { data: user, error, mutate } = useSWR("/api/user", () => {
+        console.log("Token antes de iniciar la solicitud:", token);
 
-    const { data: user, error, mutate } = useSWR("/api/user", () =>
-        clienteAxios.get("/api/user", {
+        return clienteAxios.get("/api/user", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
             .then(res => res.data)
             .catch(err => {
+                console.log("Token después de iniciar sesión:", token);
                 if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
                 navigate.push("/verify-email");
-            }
-            )
-    )
-    useEffect(() => {
+            });
+    },
 
-        if (middleware === "auth" && user && user.admin === 0) {
-            navigate.push("/citas");
+        {
+            revalidateOnFocus: false
+        });
+
+    const login = async (data, setErrors) => {
+
+        try {
+            const res = await clienteAxios.post("/api/login", data)
+            setToken(res.data.token)
+            Cookies.set('token', res.data.token, { expires: 1 });
+            setErrors([])
+
+            setTimeout(async () => {
+                await mutate('/api/user');
+            }, 200);
+        } catch (error) {
+            console.log(error.response.data.errors);
+
+            const errores = error.response.data.errors;
+            setErrors(errores);
         }
-        if (middleware === "guest" && user && url && user.admin === 0) {
-            navigate.push(url);
-        }
-        if (middleware && user && user.admin === 1) {
-            navigate.push("/dashboard/citas");
-        }
-        if (error && middleware === "auth") {
-            navigate.push("/login");
-        }
-    }, [user, error]);
+    }
+
 
     const resendEmailVerification = async ({ setStatus }) => {
         try {
@@ -56,24 +68,18 @@ export const useAuth = ({ middleware, url }) => {
         }
     }
 
-    const login = async (data, setErrors) => {
-
-        clienteAxios
-            .post('/api/login', data)
-            .then((res) => localStorage.setItem("token", res.data.token), mutate())
-            .catch(error => {
-                const errores = Object.values(error.response.data.data);
-                setErrors(errores);
-            })
-    }
 
 
     const register = async (data, setErrors) => {
         try {
             const res = await clienteAxios.post("/api/register", data)
-            localStorage.setItem("token", res.data.token)
+
+            setToken(res.data.token)
+            Cookies.set('token', res.data.token, { expires: 1 });
             setErrors([])
-            await mutate()
+            setTimeout(async () => {
+                await mutate('/api/user');
+            }, 200);
         } catch (error) {
             const errores = Object.values(error.response.data.errors);
             setErrors(errores);
@@ -89,8 +95,8 @@ export const useAuth = ({ middleware, url }) => {
                 }
             })
 
-            localStorage.removeItem("token")
-
+            setToken('')
+            Cookies.remove('token')
             mutate('/api/user', null)
 
         } catch (error) {
@@ -98,6 +104,20 @@ export const useAuth = ({ middleware, url }) => {
         }
     }
 
+    useEffect(() => {
+        if (middleware === "auth" && user && user.admin === 0) {
+            navigate.push("/citas");
+        }
+        if (middleware === "guest" && user && url && user.admin === 0) {
+            navigate.push(url);
+        }
+        if (middleware && user && user.admin === 1) {
+            navigate.push("/dashboard/citas");
+        }
+        if (error && middleware === "auth") {
+            navigate.push("/login");
+        }
+    }, [error, user]);
 
 
     return {
