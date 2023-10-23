@@ -15,7 +15,6 @@ Modal.setAppElement('body');
 
 const Servicio = ({ servicio, admin = false }) => {
 
-    console.log(servicio)
     const MySwal = withReactContent(Swal)
     /*extrayendo setServicio  */
 
