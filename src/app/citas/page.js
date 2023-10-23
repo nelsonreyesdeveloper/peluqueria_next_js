@@ -23,7 +23,8 @@ const Page = () => {
     ejecutarServicio();
   }, [user])
 
-
+  if(servicios.length === 0)  return <p>cargando...</p>
+   
   return (
     <div>
 
