@@ -21,8 +21,8 @@ export const useAuth = ({ middleware, url }) => {
         .then(res => res.data)
         .catch(err => {
 
-            setEmail(err?.response?.data[0].email || "");
             if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
+            setEmail(err?.response?.data[0].email || "");
             navigate.push("/verify-email");
         }),
         {
