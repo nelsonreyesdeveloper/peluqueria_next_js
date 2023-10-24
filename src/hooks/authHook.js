@@ -23,7 +23,7 @@ export const useAuth = ({ middleware, url }) => {
             if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
             navigate.push("/verify-email");
             setEmail(err.response.data[0].email)
-            mutate('/api/user', null);
+           
         }),
         {
             revalidateOnFocus: false
