@@ -97,6 +97,7 @@ export const useAuth = ({ middleware, url }) => {
             setToken('')
             Cookies.remove('token')
             mutate('/api/user', null)
+            window.location.reload()
 
         } catch (error) {
             console.log(error)
