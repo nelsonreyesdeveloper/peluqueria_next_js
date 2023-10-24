@@ -30,7 +30,9 @@ export function UserAuthForm({ className, ...props }) {
 
     async function onSubmit(event) {
         event.preventDefault()
-        // setIsLoading(true)
+        if (loading === true) {
+            return
+        }
 
         if ([email, password].includes("")) {
             setErrors([["Todos los campos son obligatorios"]])
@@ -94,7 +96,7 @@ export function UserAuthForm({ className, ...props }) {
                         }
 
                     </div>
-                    <Button >
+                    <Button  >
                         {/* {isLoading && (
                             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                         )} */}

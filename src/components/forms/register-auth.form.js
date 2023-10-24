@@ -30,7 +30,11 @@ export function RegisterAuthForm({ className, ...props }) {
     }, [errors])
 
     async function onSubmit(event) {
+
         event.preventDefault()
+        if (loading === true) {
+            return
+        }
         // setIsLoading(true)
         if ([email, password, passwordConfirmation, name].includes("")) {
             setErrors([["Todos los campos son obligatorios"]])
@@ -53,6 +57,8 @@ export function RegisterAuthForm({ className, ...props }) {
         <div className={cn("grid gap-6", className)} {...props}>
 
             <form onSubmit={onSubmit}>
+
+
                 <div className="grid gap-2">
 
                     <div className="grid gap-1 mb-2">
@@ -116,7 +122,7 @@ export function RegisterAuthForm({ className, ...props }) {
                             )
                         }
                     </div>
-                    <Button >
+                    <Button>
                         {/* {isLoading && (
                             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                         )} */}
