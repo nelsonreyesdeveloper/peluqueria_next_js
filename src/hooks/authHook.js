@@ -21,8 +21,9 @@ export const useAuth = ({ middleware, url }) => {
         .then(res => res.data)
         .catch(err => {
             if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
-            setEmail(err.response.data[0].email)
             navigate.push("/verify-email");
+            setEmail(err.response.data[0].email)
+            mutate('/api/user', null);
         }),
         {
             revalidateOnFocus: false
