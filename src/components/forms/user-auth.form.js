@@ -84,8 +84,8 @@ export function UserAuthForm({ className, ...props }) {
                             loading && (
                                 <Blocks
                                     visible={true}
-                                    height="25"
-                                    width="25"
+                                    height="35"
+                                    width="35"
                                     ariaLabel="blocks-loading"
                                     wrapperStyle={{}}
                                     wrapperClass="blocks-wrapper"

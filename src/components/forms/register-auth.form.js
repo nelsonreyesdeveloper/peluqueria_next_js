@@ -94,6 +94,7 @@ export function RegisterAuthForm({ className, ...props }) {
                         <Label htmlFor="password_confirmation">Repetir Password</Label>
 
                         <Input
+                            className="placeholder:text-xs"
                             id="password_confirmation"
                             type="password"
                             placeholder="●●●●●●●●●●"
@@ -106,8 +107,8 @@ export function RegisterAuthForm({ className, ...props }) {
                             loading && (
                                 <Blocks
                                     visible={true}
-                                    height="25"
-                                    width="25"
+                                    height="35"
+                                    width="35"
                                     ariaLabel="blocks-loading"
                                     wrapperStyle={{}}
                                     wrapperClass="blocks-wrapper"
