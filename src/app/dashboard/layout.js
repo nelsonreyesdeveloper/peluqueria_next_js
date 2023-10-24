@@ -12,7 +12,7 @@ const DashboardLayout = ({ children }) => {
             <Aside logout={logout}></Aside>
 
             <div className="p-4  sm:basis-3/4   sm:overflow-scroll">
-                <p className='font-bold mb-2'>Bienvenido:  <span className='font-light'>{user?.name}</span>   </p>
+                <p className='font-bold mb-2'>Bienvenido:  <span className='font-light capitalize'>{user?.name}</span>   </p>
                 <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
 
                     {

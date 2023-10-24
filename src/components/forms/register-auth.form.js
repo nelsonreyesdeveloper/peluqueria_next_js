@@ -65,7 +65,7 @@ export function RegisterAuthForm({ className, ...props }) {
                         <Label htmlFor="name">Nombre</Label>
                         <Input
                             id="name"
-                            placeholder="ej: raul lopez"
+                            placeholder="ej: Raul Alejandro Gomez Garcia"
                             type="text"
                             onChange={(e) => setName(e.target.value)}
                         />

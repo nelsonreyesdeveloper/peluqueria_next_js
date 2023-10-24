@@ -11,6 +11,7 @@ export const useAuth = ({ middleware, url }) => {
     // const [token, setToken] = useState(() => typeof window !== 'undefined' ? localStorage.getItem('token') ?? "" : "");
     const [token, setToken] = useState(Cookies.get('token'));
     const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState('');
 
     const { data: user, error, mutate } = useSWR("/api/user", () => clienteAxios.get("/api/user", {
         headers: {
@@ -19,6 +20,8 @@ export const useAuth = ({ middleware, url }) => {
     })
         .then(res => res.data)
         .catch(err => {
+
+            setEmail(err.response.data[0].email);
             if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
             navigate.push("/verify-email");
         }),
@@ -69,6 +72,8 @@ export const useAuth = ({ middleware, url }) => {
         try {
             const res = await clienteAxios.post("/api/register", data)
             setToken(res.data.token)
+
+            setEmail(data.email)
             Cookies.set('token', res.data.token, { expires: 1 });
             setErrors([])
             setTimeout(async () => {
@@ -126,6 +131,7 @@ export const useAuth = ({ middleware, url }) => {
         user,
         resendEmailVerification,
         token,
-        loading
+        loading,
+        email
     }
 }

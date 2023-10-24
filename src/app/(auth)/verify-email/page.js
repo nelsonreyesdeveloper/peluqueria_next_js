@@ -4,11 +4,10 @@ import { useAuth } from '@/hooks/authHook'
 import { useState } from 'react'
 
 const VerifyEmail = () => {
-    const { logout, resendEmailVerification } = useAuth({
+    const { logout, resendEmailVerification,email } = useAuth({
         middleware: 'auth',
         url: '/citas',
     })
-
     const [status, setStatus] = useState(null)
 
     return (
@@ -17,8 +16,8 @@ const VerifyEmail = () => {
             >
                 <div className="mb-4 text-base text-black">
                     Gracias por registrarte. Antes de empezar, ¿podrías
-                    verificar su dirección de correo electrónico haciendo clic en el enlace que acabamos de
-                    que te acabamos de enviar? Si no lo ha recibido, le enviaremos otro.
+                    verificar su dirección de correo electrónico <span className=' text-sky-800 font-bold'>{email}</span>  haciendo clic en el enlace que acabamos de
+                    de enviar. Si no lo ha recibido, le enviaremos otro.
                 </div>
 
                 {status === 'verification-link-sent' && (
@@ -29,7 +28,7 @@ const VerifyEmail = () => {
                 )}
 
                 <div className="mt-4 flex items-center justify-between">
-                    <button 
+                    <button
                         className='bg-sky-700 font-medium rounded-lg  px-4 py-2  hover:bg-sky-800 text-white'
                         onClick={() => resendEmailVerification({ setStatus })}>
                         Reenviar correo de verificación
