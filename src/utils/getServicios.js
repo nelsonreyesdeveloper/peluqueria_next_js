@@ -1,11 +1,12 @@
-import clienteAxios from '@/config/axios'
+"use client"
+import clienteAxios from "@/config/axios"
 import Cookies from 'js-cookie'
-export const getServicios = (async () => {
+export const getServicios = async () => {
+    try {
+        const res = await clienteAxios.get(`/api/servicios`)
+        return (res.data.data)
+    } catch (error) {
+        console.log(error)
+    }
 
-  const res = await clienteAxios.get(`/api/servicios`, {
-    headers: {
-      Authorization: `Bearer ${Cookies.get('token')}`
-    },
-  })
-  return res.data.data
-})
+}

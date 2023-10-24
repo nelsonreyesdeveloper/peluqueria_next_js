@@ -10,29 +10,24 @@ export const useAuth = ({ middleware, url }) => {
     const navigate = useRouter();
     // const [token, setToken] = useState(() => typeof window !== 'undefined' ? localStorage.getItem('token') ?? "" : "");
     const [token, setToken] = useState(Cookies.get('token'));
+    const [loading, setLoading] = useState(false);
 
-    const { data: user, error, mutate } = useSWR("/api/user", () => {
-        console.log("Token antes de iniciar la solicitud:", token);
-
-        return clienteAxios.get("/api/user", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then(res => res.data)
-            .catch(err => {
-                console.log("Token después de iniciar sesión:", token);
-                if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
-                navigate.push("/verify-email");
-            });
-    },
-
+    const { data: user, error, mutate } = useSWR("/api/user", () => clienteAxios.get("/api/user", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+        .then(res => res.data)
+        .catch(err => {
+            if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
+            navigate.push("/verify-email");
+        }),
         {
             revalidateOnFocus: false
         });
 
     const login = async (data, setErrors) => {
-
+        setLoading(true);
         try {
             const res = await clienteAxios.post("/api/login", data)
             setToken(res.data.token)
@@ -43,8 +38,7 @@ export const useAuth = ({ middleware, url }) => {
                 await mutate('/api/user');
             }, 200);
         } catch (error) {
-            console.log(error.response.data.errors);
-
+            setLoading(false);
             const errores = error.response.data.errors;
             setErrors(errores);
         }
@@ -71,9 +65,9 @@ export const useAuth = ({ middleware, url }) => {
 
 
     const register = async (data, setErrors) => {
+        setLoading(true);
         try {
             const res = await clienteAxios.post("/api/register", data)
-
             setToken(res.data.token)
             Cookies.set('token', res.data.token, { expires: 1 });
             setErrors([])
@@ -81,6 +75,7 @@ export const useAuth = ({ middleware, url }) => {
                 await mutate('/api/user');
             }, 200);
         } catch (error) {
+            setLoading(false);
             const errores = Object.values(error.response.data.errors);
             setErrors(errores);
 
@@ -107,15 +102,19 @@ export const useAuth = ({ middleware, url }) => {
     useEffect(() => {
         if (middleware === "auth" && user && user.admin === 0) {
             navigate.push("/citas");
+            setLoading(false);
         }
         if (middleware === "guest" && user && url && user.admin === 0) {
             navigate.push(url);
+            setLoading(false);
         }
         if (middleware && user && user.admin === 1) {
             navigate.push("/dashboard/citas");
+            setLoading(false);
         }
         if (error && middleware === "auth") {
             navigate.push("/login");
+            setLoading(false);
         }
     }, [error, user]);
 
@@ -125,6 +124,8 @@ export const useAuth = ({ middleware, url }) => {
         register,
         logout,
         user,
-        resendEmailVerification
+        resendEmailVerification,
+        token,
+        loading
     }
 }

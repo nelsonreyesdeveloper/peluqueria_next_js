@@ -1,28 +1,13 @@
 "use client"
 import Tabs from '@/components/Tabs';
-import { getServicios } from '@/utils/getServicios';
 import Servicios from '@/components/Servicios';
 import { Pagination } from '@/components/Pagination';
-import { useEffect, useState } from 'react';
 
 import { useAuth } from '@/hooks/authHook';
-
+import { usePeluqueriaContext } from '@/context/PeluqueriaProvider';
 const Page = () => {
   const { user, logout } = useAuth({ middleware: 'auth' });
-  const [servicios, setServicios] = useState([]);
-
-  useEffect(() => {
-
-    const ejecutarServicio = async () => {
-      const servicios = await getServicios();
-      setServicios(servicios);
-    }
-   
-    if(user === undefined) return
-    if(servicios.length > 0) return
-    ejecutarServicio();
-  }, [user])
-
+  const { todosServicios } = usePeluqueriaContext();
 
   return (
     <div>
@@ -36,8 +21,8 @@ const Page = () => {
 
       <Tabs></Tabs>
       {
-        servicios.length > 0 && (
-          <Servicios servicios={servicios}></Servicios>
+        todosServicios.length > 0 && (
+          <Servicios servicios={todosServicios}></Servicios>
         )
       }
       <Pagination></Pagination>

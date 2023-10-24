@@ -1,23 +1,13 @@
 "use client"
 import React from 'react'
 import Servicio from '@/components/Servicio'
-import { getServicios } from '@/utils/getServicios'
 import Alerta from '@/components/Alerta'
 import { useEffect, useState } from 'react'
+import { usePeluqueriaContext } from '@/context/PeluqueriaProvider'
 
 const ServiciosAdmin = () => {
-  const [servicios, setServicios] = useState([]);
-
-  useEffect(() => {
-    const getServiciosLoader = async () => {
-      const servicios2 = await getServicios()
-      setServicios(servicios2)
-    }
-    
-    getServiciosLoader()
-  }, [])
-
-  if (servicios.length === 0) {
+  const { todosServicios } = usePeluqueriaContext()
+  if (todosServicios.length === 0) {
     return (
       <>
         <p>Cargando....</p>
@@ -25,9 +15,9 @@ const ServiciosAdmin = () => {
     )
   }
   return (
-    <div className={` ${servicios.length !== 0 ? 'grid w-[95%]  mx-auto sm:grid-cols-2 lg:grid-cols-3 gap-5 my-5' : ''}`}>
+    <div className={` ${todosServicios.length !== 0 ? 'grid w-[95%]  mx-auto sm:grid-cols-2 lg:grid-cols-3 gap-5 my-5' : ''}`}>
       {
-        servicios.length !== 0 ? servicios.map(servicio => {
+        todosServicios.length !== 0 ? todosServicios.map(servicio => {
           return (
             <Servicio key={servicio.id} admin={true} servicio={servicio}>
 

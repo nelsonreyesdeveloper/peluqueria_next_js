@@ -3,6 +3,8 @@ import clienteAxios from "@/config/axios";
 import { useRouter } from "next/navigation";
 import { createContext, useState, useContext, useEffect } from "react"
 import { toast } from "react-toastify"
+import Cookies from "js-cookie";
+import { getServicios } from "@/utils/getServicios";
 
 const peluqueriaContext = createContext()
 
@@ -14,6 +16,15 @@ export const PeluqueriaProvider = ({ children }) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [servicioModal, setServicioModal] = useState({})
     const [resetBlue, setResetBlue] = useState(false);
+    const [todosServicios, setTodosServicios] = useState([])
+
+    useEffect(() => {
+        const getServiciosLoader = async () => {
+            const serviciosTodo = await getServicios()
+            setTodosServicios(serviciosTodo)
+        }
+        getServiciosLoader()
+    }, [])
 
     /* Modal */
     const handleModal = () => {
@@ -86,7 +97,7 @@ export const PeluqueriaProvider = ({ children }) => {
             },
                 {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                        Authorization: `Bearer ${Cookies.get('token')}`
                     },
                 }
             );
@@ -119,7 +130,7 @@ export const PeluqueriaProvider = ({ children }) => {
         try {
             const res = await clienteAxios.delete(`/api/citas/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    Authorization: `Bearer ${Cookies.get('token')}`
                 },
             });
             const data = await res.data;
@@ -131,9 +142,9 @@ export const PeluqueriaProvider = ({ children }) => {
     }
     const handleChangeStatusCita = async (id) => {
         try {
-            const res = await clienteAxios.put(`/api/citas/${id}`,null, {
+            const res = await clienteAxios.put(`/api/citas/${id}`, null, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    Authorization: `Bearer ${Cookies.get('token')}`
                 },
             });
             const data = await res.data;
@@ -146,6 +157,9 @@ export const PeluqueriaProvider = ({ children }) => {
     /* Admin servicios */
 
     const handleEditarServicio = async (servicio, estado = null) => {
+
+
+
         try {
             const res = await clienteAxios.put(`/api/servicios/${servicio.id}`, {
                 nombre: servicio.nombre,
@@ -155,15 +169,28 @@ export const PeluqueriaProvider = ({ children }) => {
             },
                 {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                        Authorization: `Bearer ${Cookies.get('token')}`
                     },
                 });
+
+            const serviciosUptated = todosServicios.map(serviciost => {
+                if (serviciost.id == servicio.id) {
+                    return {
+                        id: servicio.id,
+                        nombre: servicio.nombre,
+                        precio: servicio.precio,
+                        descripcion: servicio.descripcion,
+                        estado: estado == 1 ? estado : (estado == 0 ? estado : serviciost.estado),
+                        text_imagen: serviciost.text_imagen
+                    }
+                }
+                return serviciost
+            })
+
+            setTodosServicios(serviciosUptated);
+
             const data = await res.data;
-
             toast.success(data.data);
-            window.location.reload();
-
-
             setModalIsOpen(false);
         } catch (error) {
             toast.error(error?.response?.data?.data)
@@ -175,7 +202,7 @@ export const PeluqueriaProvider = ({ children }) => {
         try {
             const res = await clienteAxios.delete(`/api/servicios/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    Authorization: `Bearer ${Cookies.get('token')}`
                 },
             });
             const data = await res.data;
@@ -208,7 +235,8 @@ export const PeluqueriaProvider = ({ children }) => {
         servicioModal,
         setServicioModal,
         resetBlue,
-        setResetBlue
+        setResetBlue,
+        todosServicios
 
     }
     return <peluqueriaContext.Provider value={values}>{children}</peluqueriaContext.Provider>

@@ -12,7 +12,6 @@ const Servicios = ({ servicios }) => {
     <div>
       <div className={`${mostrarTabs === 1 ? 'block' : 'hidden'} `}>
         <h2 className='text-xl  font-bold uppercase mt-5 text-center'>Selecciona los servicios que deseas</h2>
-
         <div className='grid w-[95%]  mx-auto sm:grid-cols-2 lg:grid-cols-3 gap-5 my-5'>
           {
             servicios.map(servicio => {
@@ -22,7 +21,7 @@ const Servicios = ({ servicios }) => {
             })
           }
         </div>
-
+        
       </div>
 
       <div className={`${mostrarTabs === 2 ? 'block' : 'hidden'}`}>

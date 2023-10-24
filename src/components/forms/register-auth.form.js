@@ -8,10 +8,11 @@ import { Label } from "../ui/label"
 import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
 import { useAuth } from "@/hooks/authHook"
+import { Blocks } from "react-loader-spinner"
 
 export function RegisterAuthForm({ className, ...props }) {
 
-    const { register } = useAuth({ middleware: 'guest', url: '/citas' })
+    const { register, loading } = useAuth({ middleware: 'guest', url: '/citas' })
 
     // const [isLoading, setIsLoading] = useState(false)
     const [name, setName] = useState('')
@@ -84,7 +85,7 @@ export function RegisterAuthForm({ className, ...props }) {
                         <Input
                             id="password"
                             type="password"
-                            placeholder="******"
+                            placeholder="●●●●●●●●●●"
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
@@ -98,6 +99,21 @@ export function RegisterAuthForm({ className, ...props }) {
                             placeholder="******"
                             onChange={(e) => setPasswordConfirmation(e.target.value)}
                         />
+                    </div>
+
+                    <div className="flex justify-center">
+                        {
+                            loading && (
+                                <Blocks
+                                    visible={true}
+                                    height="25"
+                                    width="25"
+                                    ariaLabel="blocks-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass="blocks-wrapper"
+                                />
+                            )
+                        }
                     </div>
                     <Button >
                         {/* {isLoading && (
