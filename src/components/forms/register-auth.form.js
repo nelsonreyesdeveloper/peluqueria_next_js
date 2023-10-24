@@ -43,6 +43,7 @@ export function RegisterAuthForm({ className, ...props }) {
         }
         setErrors([])
 
+
         const data = {
             email,
             password,
@@ -101,7 +102,7 @@ export function RegisterAuthForm({ className, ...props }) {
                         <Label htmlFor="password_confirmation">Repetir Password</Label>
 
                         <Input
-                         className="placeholder:text-[10px]"
+                            className="placeholder:text-[10px]"
                             id="password_confirmation"
                             type="password"
                             placeholder="●●●●●●●●●●"
