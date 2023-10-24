@@ -21,9 +21,10 @@ export const useAuth = ({ middleware, url }) => {
         .then(res => res.data)
         .catch(err => {
             if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
+            setEmail(err.response.data[0]);
+
+            
             navigate.push("/verify-email");
-            setEmail(err.response.data[0].email)
-           
         }),
         {
             revalidateOnFocus: false
@@ -72,13 +73,13 @@ export const useAuth = ({ middleware, url }) => {
         try {
             const res = await clienteAxios.post("/api/register", data)
             setToken(res.data.token)
+            setEmail(data.email);
             Cookies.set('token', res.data.token, { expires: 1 });
             setErrors([])
             setTimeout(async () => {
                 await mutate('/api/user');
             }, 200);
         } catch (error) {
-            console.log(error);
             setLoading(false);
             const errores = Object.values(error.response.data.errors);
             setErrors(errores);
@@ -132,7 +133,7 @@ export const useAuth = ({ middleware, url }) => {
         resendEmailVerification,
         token,
         loading,
-        email
+        email,
 
     }
 }

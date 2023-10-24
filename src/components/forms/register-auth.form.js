@@ -9,11 +9,12 @@ import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
 import { useAuth } from "@/hooks/authHook"
 import { Blocks } from "react-loader-spinner"
+import { usePeluqueriaContext } from "@/context/PeluqueriaProvider"
 
 export function RegisterAuthForm({ className, ...props }) {
 
     const { register, loading } = useAuth({ middleware: 'guest', url: '/citas' })
-
+    
     // const [isLoading, setIsLoading] = useState(false)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -35,6 +36,8 @@ export function RegisterAuthForm({ className, ...props }) {
         if (loading === true) {
             return
         }
+
+      
         // setIsLoading(true)
         if ([email, password, passwordConfirmation, name].includes("")) {
             setErrors([["Todos los campos son obligatorios"]])

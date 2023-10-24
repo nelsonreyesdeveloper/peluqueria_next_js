@@ -236,7 +236,8 @@ export const PeluqueriaProvider = ({ children }) => {
         setServicioModal,
         resetBlue,
         setResetBlue,
-        todosServicios
+        todosServicios,
+        setServicios
 
     }
     return <peluqueriaContext.Provider value={values}>{children}</peluqueriaContext.Provider>

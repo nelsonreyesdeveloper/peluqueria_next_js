@@ -2,8 +2,10 @@
 import Link from 'next/link'
 import { useAuth } from '@/hooks/authHook'
 import { useState } from 'react'
+import { usePeluqueriaContext } from '@/context/PeluqueriaProvider'
 
 const VerifyEmail = () => {
+
     const { logout, resendEmailVerification,email } = useAuth({
         middleware: 'auth',
         url: '/citas',
@@ -37,7 +39,7 @@ const VerifyEmail = () => {
                     <button
                         type="button"
                         className="underline text-sm text-gray-600 hover:text-gray-900"
-                        onClick={logout}>
+                        onClick={() =>{logout()}}>
                         Cerrar Sesion
                     </button>
                 </div>
