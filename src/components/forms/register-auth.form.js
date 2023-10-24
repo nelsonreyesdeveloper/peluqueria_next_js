@@ -96,7 +96,7 @@ export function RegisterAuthForm({ className, ...props }) {
                         <Input
                             id="password_confirmation"
                             type="password"
-                            placeholder="******"
+                            placeholder="●●●●●●●●●●"
                             onChange={(e) => setPasswordConfirmation(e.target.value)}
                         />
                     </div>
