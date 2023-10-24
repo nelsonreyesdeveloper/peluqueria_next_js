@@ -89,6 +89,7 @@ export function RegisterAuthForm({ className, ...props }) {
                         <Label htmlFor="password">Password</Label>
 
                         <Input
+                            className="placeholder:text-xs"
                             id="password"
                             type="password"
                             placeholder="●●●●●●●●●●"
