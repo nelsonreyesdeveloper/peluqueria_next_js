@@ -89,7 +89,7 @@ export function RegisterAuthForm({ className, ...props }) {
                         <Label htmlFor="password">Password</Label>
 
                         <Input
-                            className="placeholder:text-xs"
+                            className="placeholder:text-[10px]"
                             id="password"
                             type="password"
                             placeholder="●●●●●●●●●●"
@@ -101,7 +101,7 @@ export function RegisterAuthForm({ className, ...props }) {
                         <Label htmlFor="password_confirmation">Repetir Password</Label>
 
                         <Input
-                            className="placeholder:text-xs"
+                         className="placeholder:text-[10px]"
                             id="password_confirmation"
                             type="password"
                             placeholder="●●●●●●●●●●"
