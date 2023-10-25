@@ -101,6 +101,7 @@ export const useAuth = ({ middleware, url }) => {
             setToken('')
             Cookies.remove('token')
             mutate('/api/user', null)
+            document.querySelector('#react-select-hora-input').value = '';
 
         } catch (error) {
             console.log(error)

@@ -15,40 +15,65 @@ export const PeluqueriaProvider = ({ children }) => {
     const [mostrarTabs, setMostrarTabs] = useState(1)
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [servicioModal, setServicioModal] = useState({})
-    const [resetBlue, setResetBlue] = useState(false);
     const [todosServicios, setTodosServicios] = useState([])
+    const [nuevoPedido, setNuevoPedido] = useState(false);
 
+    /* Obtener fecha actual de ahora */
+    const date = new Date(); // Obtiene la fecha y hora actual en la zona horaria local
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const formattedDatePleca = date.toLocaleDateString('es-SV', options);
+    const obtenervalores = formattedDatePleca.split('/')
+    const formattedDate = `${obtenervalores[2]}-${obtenervalores[1]}-${obtenervalores[0]}`
+    const [fecha, setFecha] = useState(formattedDate)
+    const [hora, setHora] = useState('')
+
+    const router = useRouter();
     useEffect(() => {
         const getServiciosLoader = async () => {
             const serviciosTodo = await getServicios()
-            setTodosServicios(serviciosTodo)
+            const agregrandoMarcado = serviciosTodo.map(todo => {
+                return {
+                    ...todo,
+                    marcado: 0
+                }
+            })
+
+            setTodosServicios(agregrandoMarcado)
         }
         getServiciosLoader()
-    }, [])
+    }, [nuevoPedido])
 
     /* Modal */
     const handleModal = () => {
         setModalIsOpen(!modalIsOpen)
     }
+
     useEffect(() => {
         if (!modalIsOpen) {
             setServicioModal({})
         }
     }, [modalIsOpen])
 
-    const router = useRouter();
+    /* Marcando estado  a  0 */
 
-    /* Obtener fecha actual de ahora */
+    /* Individual */
+    const marcarEstadoAcero = (id) => {
+        const updateMarcadoServicios = todosServicios.map(todoService => {
+            if (todoService.id == id) {
+                return {
+                    ...todoService,
+                    marcado: 0
+                }
+            }
+            return todoService
+        })
+        setTodosServicios(updateMarcadoServicios)
+    }
 
-    const date = new Date(); // Obtiene la fecha y hora actual en la zona horaria local
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const formattedDatePleca = date.toLocaleDateString('es-SV', options);
-    const obtenervalores = formattedDatePleca.split('/')
-    const formattedDate = `${obtenervalores[2]}-${obtenervalores[1]}-${obtenervalores[0]}`
-
-    const [fecha, setFecha] = useState(formattedDate)
-    const [hora, setHora] = useState('')
-
+    const marcarEstadoAceroTodos = () => {
+        const updatedTodos = todosServicios.map(todo => ({ ...todo, marcado: 0 }));
+        setTodosServicios(updatedTodos)
+    }
 
     /* Cliente citas */
     const handleCantidad = (nuevaCantidad, id) => {
@@ -69,15 +94,39 @@ export const PeluqueriaProvider = ({ children }) => {
         hora,
     }
 
+    const handleDeleteCitaResumenCita = (id) => {
+        const updateServicioCliente = servicios.filter(servicio => servicio.id !== id);
+        setServicios(updateServicioCliente)
+
+        marcarEstadoAcero(id)
+
+    }
+
     const handleAgregarServicio = (servicio) => {
         /* Si el servicio no existe en el state, lo agrego */
         /* Agregar la cantidad al servicio */
         if (!servicios.some(s => s.id === servicio.id)) {
+            /* Marcando en setTodoServicicio Como agregado */
+            const updateSetTodosServicios = todosServicios.map(setTodo => {
+                if (setTodo.id == servicio.id) {
+                    return {
+                        ...servicio,
+                        marcado: 1
+                    }
+                }
+                return setTodo
+            })
+
+            setTodosServicios(updateSetTodosServicios)
+
             servicio.cantidad = 1;
             setServicios([...servicios, servicio])
         } else {
             /* Si existe lo elimino  */
             setServicios(servicios.filter(s => s.id !== servicio.id))
+            marcarEstadoAcero(servicio.id)
+
+
         }
     }
 
@@ -101,7 +150,7 @@ export const PeluqueriaProvider = ({ children }) => {
                     },
                 }
             );
-
+            marcarEstadoAceroTodos();
             toast.success("Cita Realizada con exito");
             setServicios([])
             setFecha('')
@@ -110,16 +159,13 @@ export const PeluqueriaProvider = ({ children }) => {
 
             router.push("/citas");
 
-            setResetBlue(true)
             document.querySelector('#fecha').value = '';
+            document.querySelector('#react-select-hora-input').value = '';
             const data = await res.data;
 
         } catch (error) {
-
             if (error.response.status !== 400) throw new Error(error);
-
             toast.error(error.response.data.data)
-
         }
 
     }
@@ -157,8 +203,6 @@ export const PeluqueriaProvider = ({ children }) => {
     /* Admin servicios */
 
     const handleEditarServicio = async (servicio, estado = null) => {
-
-
 
         try {
             const res = await clienteAxios.put(`/api/servicios/${servicio.id}`, {
@@ -234,10 +278,11 @@ export const PeluqueriaProvider = ({ children }) => {
         handleEditarServicio,
         servicioModal,
         setServicioModal,
-        resetBlue,
-        setResetBlue,
         todosServicios,
-        setServicios
+        setServicios,
+        handleDeleteCitaResumenCita,
+        marcarEstadoAceroTodos
+
 
     }
     return <peluqueriaContext.Provider value={values}>{children}</peluqueriaContext.Provider>

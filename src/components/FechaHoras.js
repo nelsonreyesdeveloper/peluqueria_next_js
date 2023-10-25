@@ -141,6 +141,7 @@ const FechaHoras = () => {
                         isOptionDisabled={isOptionDisabled}
                         styles={customStyles}
                         options={horas}
+                        id='hora_id'
                     />
                 </div>
 

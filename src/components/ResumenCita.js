@@ -6,7 +6,7 @@ import { useState } from "react"
 
 
 export const ResumenCita = () => {
-    const { detallesCita, handleCantidad, handleConfirmarCita, fecha } = usePeluqueriaContext()
+    const { detallesCita, handleCantidad, handleConfirmarCita, fecha, handleDeleteCitaResumenCita } = usePeluqueriaContext()
     const detalles = (Object.values(detallesCita));
     const servicios = detalles[0]
     const [disabledButton, setDisabledButton] = useState(false)
@@ -46,6 +46,9 @@ export const ResumenCita = () => {
                                                 <div className="flex items-center justify-between mt-3">
                                                     <p className="mt-2">Precio: {formatearDinero(servicio.precio)}</p>
                                                     <p className="mt-2">Subtotal: {formatearDinero(servicio.precio * servicio.cantidad)}</p>
+                                                </div>
+                                                <div>
+                                                    <button onClick={() => handleDeleteCitaResumenCita(servicio.id)} className="bg-red-600 w-full my-3 text-white px-3 py-2 rounded-md uppercase font-bold hover:bg-red-800">Eliminar Servicio</button>
                                                 </div>
                                             </div>
 
