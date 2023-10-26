@@ -98,7 +98,7 @@ const FechaHoras = () => {
             cursor: isDisabled ? 'not-allowed' : 'pointer',
             opacity: isDisabled ? 0.3 : 1,
         }),
-    
+
     };
 
 
@@ -126,27 +126,28 @@ const FechaHoras = () => {
                     <input id='fecha' onChange={(e) => (
                         /* validar que la pecha introducida no sea anterior a la fecha actual */
                         handleFecha(e)
-                    )} type="date" defaultValue={formattedDate} min={formattedDate} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" />
+                    )} type="date" min={formattedDate} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" />
                 </div>
 
             </div>
+            {
+                fecha && (
+                    <div className='mb-4 sm:w-1/2'>
+                        <label className='block uppercase mb-2 font-bold' htmlFor='hora'>Hora</label>
+                        <div className="relative">
 
-            <div className='mb-4 sm:w-1/2'>
-                <label className='block uppercase mb-2 font-bold' htmlFor='hora'>Hora</label>
-                <div className="relative">
-
-                    <Select placeholder="Seleccione una hora"
-                        instanceId={'hora'}
-                        onChange={(e) => setHora(e.value)}
-                        isOptionDisabled={isOptionDisabled}
-                        styles={customStyles}
-                        options={horas}
-                        id='hora_id'
-                    />
-                </div>
-
-            </div>
-
+                            <Select placeholder="Seleccione una hora"
+                                instanceId={'hora'}
+                                onChange={(e) => setHora(e.value)}
+                                isOptionDisabled={isOptionDisabled}
+                                styles={customStyles}
+                                options={horas}
+                                id='hora_id'
+                            />
+                        </div>
+                    </div>
+                )
+            }
 
         </div>
     )

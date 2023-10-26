@@ -1,7 +1,7 @@
-"use client"
 import clienteAxios from "@/config/axios"
 import useSWR from 'swr' // ✅ Available in server components
 import Cookies from "js-cookie"
+
 const getCitasAxios = async (fecha) => {
     const res = await clienteAxios.get(`/api/citas?fecha=${fecha[1]}`,{
         headers: {

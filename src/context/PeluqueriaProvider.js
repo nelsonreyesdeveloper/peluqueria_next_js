@@ -28,18 +28,20 @@ export const PeluqueriaProvider = ({ children }) => {
     const [hora, setHora] = useState('')
 
     const router = useRouter();
-    useEffect(() => {
-        const getServiciosLoader = async () => {
-            const serviciosTodo = await getServicios()
-            const agregrandoMarcado = serviciosTodo.map(todo => {
-                return {
-                    ...todo,
-                    marcado: 0
-                }
-            })
+    
+    const getServiciosLoader = async () => {
+        const serviciosTodo = await getServicios()
+        const agregrandoMarcado = serviciosTodo.map(todo => {
+            return {
+                ...todo,
+                marcado: 0
+            }
+        })
 
-            setTodosServicios(agregrandoMarcado)
-        }
+        setTodosServicios(agregrandoMarcado)
+    }
+
+    useEffect(() => {
         getServiciosLoader()
     }, [nuevoPedido])
 
@@ -157,10 +159,9 @@ export const PeluqueriaProvider = ({ children }) => {
             setHora('')
             setMostrarTabs(1)
 
-            router.push("/citas");
-
-            document.querySelector('#fecha').value = '';
-            document.querySelector('#react-select-hora-input').value = '';
+            router.push("/mis-citas");
+            // document.querySelector('#fecha').value = '';
+            // document.querySelector('#react-select-hora-input').value = '';
             const data = await res.data;
 
         } catch (error) {
@@ -281,7 +282,8 @@ export const PeluqueriaProvider = ({ children }) => {
         todosServicios,
         setServicios,
         handleDeleteCitaResumenCita,
-        marcarEstadoAceroTodos
+        marcarEstadoAceroTodos,
+        getServiciosLoader
 
 
     }

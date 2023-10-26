@@ -101,7 +101,7 @@ export const useAuth = ({ middleware, url }) => {
             setToken('')
             Cookies.remove('token')
             mutate('/api/user', null)
-            document.querySelector('#react-select-hora-input').value = '';
+            // document.querySelector('#react-select-hora-input').value = '';
 
         } catch (error) {
             console.log(error)
@@ -110,8 +110,12 @@ export const useAuth = ({ middleware, url }) => {
 
     useEffect(() => {
         if (middleware === "auth" && user && user.admin === 0) {
-            navigate.push("/citas");
-            setLoading(false);
+            if ((url === "/nueva-cita" || url == "/mis-citas")) {
+                setLoading(false);
+                return
+            } else {
+                navigate.push("mis-citas")
+            }
         }
         if (middleware === "guest" && user && url && user.admin === 0) {
             navigate.push(url);

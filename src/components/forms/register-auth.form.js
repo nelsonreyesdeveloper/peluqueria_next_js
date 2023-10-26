@@ -13,7 +13,7 @@ import { usePeluqueriaContext } from "@/context/PeluqueriaProvider"
 
 export function RegisterAuthForm({ className, ...props }) {
 
-    const { register, loading } = useAuth({ middleware: 'guest', url: '/citas' })
+    const { register, loading } = useAuth({ middleware: 'guest', url: '/mis-citas' })
     
     // const [isLoading, setIsLoading] = useState(false)
     const [name, setName] = useState('')

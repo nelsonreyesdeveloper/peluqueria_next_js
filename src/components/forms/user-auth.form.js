@@ -12,7 +12,7 @@ import { Blocks } from "react-loader-spinner"
 
 export function UserAuthForm({ className, ...props }) {
 
-    const { login, loading } = useAuth({ middleware: 'guest', url: '/citas' })
+    const { login, loading } = useAuth({ middleware: 'guest', url: '/mis-citas' })
 
     // const [isLoading, setIsLoading] = useState(false)
     const [email, setEmail] = useState('')

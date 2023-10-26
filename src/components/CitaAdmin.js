@@ -28,7 +28,7 @@ const CitaAdmin = ({ cita }) => {
                       <p className='font-bold uppercase'><span className='font-normal '>{servicio.nombre}</span> </p>
                       <p className='font-bold uppercase'> X{servicio.pivot.cantidad}</p>
                     </div>
-                    <p className='font-bold uppercase'><span className='font-normal capitalize'>{formatearDinero(servicio.precio)} </span> </p>
+                    <p className='font-bold uppercase'><span className='font-normal capitalize'>{formatearDinero(servicio.pivot.subtotal)} </span> </p>
 
                   </div>
 

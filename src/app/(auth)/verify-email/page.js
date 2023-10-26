@@ -6,9 +6,9 @@ import { usePeluqueriaContext } from '@/context/PeluqueriaProvider'
 
 const VerifyEmail = () => {
 
-    const { logout, resendEmailVerification,email } = useAuth({
+    const { logout, resendEmailVerification, email } = useAuth({
         middleware: 'auth',
-        url: '/citas',
+        url: '/mis-citas',
     })
     const [status, setStatus] = useState(null)
 
@@ -29,9 +29,9 @@ const VerifyEmail = () => {
                     </div>
                 )}
 
-                <div className="mt-4 flex items-center justify-between">
+                <div className="mt-4 flex flex-col gap-y-3 sm:gap-0 sm:flex-row  items-center justify-between">
                     <button
-                        className='bg-sky-700 font-medium rounded-lg  px-4 py-2  hover:bg-sky-800 text-white'
+                        className='bg-sky-700 font-medium leading-5 rounded-lg  px-4 py-2  hover:bg-sky-800 text-white'
                         onClick={() => resendEmailVerification({ setStatus })}>
                         Reenviar correo de verificación
                     </button>
@@ -39,7 +39,7 @@ const VerifyEmail = () => {
                     <button
                         type="button"
                         className="underline text-sm text-gray-600 hover:text-gray-900"
-                        onClick={() =>{logout()}}>
+                        onClick={() => { logout() }}>
                         Cerrar Sesion
                     </button>
                 </div>

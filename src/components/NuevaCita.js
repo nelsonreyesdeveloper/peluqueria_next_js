@@ -5,7 +5,7 @@ import { usePeluqueriaContext } from '@/context/PeluqueriaProvider'
 import FechaHoras from './FechaHoras'
 import ResumenCita from './ResumenCita'
 
-const Servicios = ({ servicios }) => {
+const NuevaCita = ({ servicios }) => {
 
   const { mostrarTabs } = usePeluqueriaContext()
   return (
@@ -34,4 +34,4 @@ const Servicios = ({ servicios }) => {
   )
 }
 
-export default Servicios
+export default NuevaCita
