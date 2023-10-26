@@ -16,7 +16,7 @@ const ServiciosLayout = ({ children }) => {
         <div className="absolute w-full h-full bg-black opacity-80 top-0">
 
         </div>
-        <button onClick={() => { marcarEstadoAceroTodos(); setServicios([]); logout(); }} className='tex-center underline underline-offset-4 decoration-2 absolute top-0 right-2 lg:hidden text-white font-black uppercase  hover:text-red-100 '>Cerrar Sesion</button>
+        <button onClick={() => { marcarEstadoAceroTodos(); setServicios([]); logout(); }} className='z-50 tex-center underline underline-offset-4 decoration-2 absolute top-0 right-2 lg:hidden text-white font-black uppercase  hover:text-red-100 '>Cerrar Sesion</button>
 
       </div>
       <div className='basis-9/12 sm:h-screen sm:overflow-scroll'>
