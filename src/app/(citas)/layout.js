@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const ServiciosLayout = ({ children }) => {
   const { user, logout } = useAuth({});
-  const { marcarEstadoAceroTodos, setServicios500300 } = usePeluqueriaContext();
+  const { marcarEstadoAceroTodos, setServicios } = usePeluqueriaContext();
 
   const path = usePathname()
   return (
