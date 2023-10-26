@@ -155,7 +155,7 @@ export const PeluqueriaProvider = ({ children }) => {
             marcarEstadoAceroTodos();
             toast.success("Cita Realizada con exito");
             setServicios([])
-            setFecha('')
+            // setFecha('')
             setHora('')
             setMostrarTabs(1)
 
@@ -283,7 +283,8 @@ export const PeluqueriaProvider = ({ children }) => {
         setServicios,
         handleDeleteCitaResumenCita,
         marcarEstadoAceroTodos,
-        getServiciosLoader
+        getServiciosLoader,
+        hora
 
 
     }

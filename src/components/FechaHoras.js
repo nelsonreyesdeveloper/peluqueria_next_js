@@ -6,7 +6,7 @@ import Alerta from './Alerta';
 import { getHoras } from '@/utils/getHoras';
 const FechaHoras = () => {
 
-    const { setFecha, setHora, fecha, formattedDate } = usePeluqueriaContext();
+    const { setFecha, setHora, fecha, formattedDate,hora } = usePeluqueriaContext();
     const [errors, setErrors] = useState(false)
     const [horas, setHoras] = useState([]);
 
@@ -40,6 +40,7 @@ const FechaHoras = () => {
 
     /* Iterar con for de 7:00 am a 11:30 am en cada iteracion agregar 20 minutos */
     const handleFecha = async (e) => {
+        setHora('')
         /* Consultando las horas disponibles */
         if (e.target.value >= formattedDate) {
 
@@ -126,7 +127,7 @@ const FechaHoras = () => {
                     <input id='fecha' onChange={(e) => (
                         /* validar que la pecha introducida no sea anterior a la fecha actual */
                         handleFecha(e)
-                    )} type="date" min={formattedDate} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" />
+                    )} type="date" value={fecha} min={formattedDate} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" />
                 </div>
 
             </div>
@@ -143,6 +144,7 @@ const FechaHoras = () => {
                                 styles={customStyles}
                                 options={horas}
                                 id='hora_id'
+                                value={{ value: hora, label: hora }}
                             />
                         </div>
                     </div>

@@ -65,7 +65,7 @@ export const ResumenCita = () => {
                                     <p className="uppercase text-lg   font-black text-center">Total a pagar: {formatearDinero(servicios.reduce((a, c) => a + c.precio * c.cantidad, 0))}</p>
 
                                     <div className="mt-5 flex flex-col w-full">
-                                        <button disabled={disabledButton} onClick={() => { setDisabledButton(true); setTimeout(() => { setDisabledButton(false) }, 5000); handleConfirmarCita(); }} className={`w-full bg-orange-500 ${disabledButton ? 'cursor-not-allowed opacity-10' : ''} hover:bg-orange-700 uppercase text-white font-bold py-2 px-4 rounded`}>
+                                        <button disabled={disabledButton} onClick={() => { setDisabledButton(true); setTimeout(() => { setDisabledButton(false) }, 5000); handleConfirmarCita(); }} className={`w-full bg-green-500 ${disabledButton ? 'cursor-not-allowed opacity-10' : ''} hover:bg-green-700 uppercase text-white font-bold py-2 px-4 rounded`}>
                                             Confirmar Cita
                                         </button>
 
