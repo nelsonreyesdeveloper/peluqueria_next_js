@@ -12,7 +12,7 @@ export const useAuth = ({ middleware, url }) => {
     const [token, setToken] = useState(Cookies.get('token'));
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
-    const [updatedEmail, setUpdatedEmail] = useState(1);
+    const [updatedEmail, setUpdatedEmail] = useState(0);
 
     const { data: user, error, mutate } = useSWR("/api/user", () => clienteAxios.get("/api/user", {
         headers: {
@@ -24,7 +24,8 @@ export const useAuth = ({ middleware, url }) => {
             if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
             setEmail(err.response.data[0]);
             navigate.push("/verify-email");
-            if (updatedEmail === 1) {
+            console.log(email);
+            if (updatedEmail <= 2) {
                 mutate('/api/user');
                 setUpdatedEmail(updatedEmail + 1);
             }
