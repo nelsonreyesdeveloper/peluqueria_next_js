@@ -35,7 +35,9 @@ const MisCitas = () => {
               )
             })
 
-          ) : <Alerta><p className='bg-red-100 text-red-800 border-l-8 border-6 border-red-800'>No hay citas</p></Alerta>
+          ) : (
+            <Alerta><p className='bg-red-100 text-red-800 border-l-8 border-6 border-red-800'>No hay citas</p></Alerta>
+          )
         }
       </div>
 
