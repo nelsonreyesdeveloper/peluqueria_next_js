@@ -9,7 +9,7 @@ import { useState } from "react"
 
 const Citas = () => {
   const [fecha, setFecha] = useState('')
-  const { fecha: default_fecha } = usePeluqueriaContext();
+  const {formattedDate} = usePeluqueriaContext();
   const { data: citas, error, isLoading, key } = getCitas(fecha)
 
   return (
@@ -17,7 +17,7 @@ const Citas = () => {
       <h2 className="text-2xl font-bold uppercase mb-5 text-center">Administra las citas </h2>
       <div className=" mb-5 flex flex-col ">
         <label className="text-sm mb-2 sm:text-base font-bold uppercase">Seleccione la fecha a filtrar</label>
-        <input defaultValue={default_fecha} onChange={(e) => setFecha(e.target.value)} className="sm:w-max border border-black focus:outline-none rounded-md p-2 " type="date" placeholder="Seleccione la fecha a filtrar"></input>
+        <input defaultValue={formattedDate} onChange={(e) => setFecha(e.target.value)} className="sm:w-max border border-black focus:outline-none rounded-md p-2 " type="date" placeholder="Seleccione la fecha a filtrar"></input>
       </div>
 
       {

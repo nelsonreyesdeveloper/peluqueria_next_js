@@ -155,7 +155,7 @@ export const PeluqueriaProvider = ({ children }) => {
             marcarEstadoAceroTodos();
             toast.success("Cita Realizada con exito");
             setServicios([])
-            // setFecha('')
+            setFecha(formattedDate)
             setHora('')
             setMostrarTabs(1)
 
@@ -285,8 +285,6 @@ export const PeluqueriaProvider = ({ children }) => {
         marcarEstadoAceroTodos,
         getServiciosLoader,
         hora
-
-
     }
     return <peluqueriaContext.Provider value={values}>{children}</peluqueriaContext.Provider>
 
