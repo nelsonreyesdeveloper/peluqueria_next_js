@@ -167,6 +167,7 @@ export const PeluqueriaProvider = ({ children }) => {
         } catch (error) {
             if (error.response.status !== 400) throw new Error(error);
             toast.error(error.response.data.data)
+            
         }
 
     }
