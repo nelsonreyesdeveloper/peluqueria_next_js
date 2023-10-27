@@ -31,6 +31,7 @@ export const PeluqueriaProvider = ({ children }) => {
     
     const getServiciosLoader = async () => {
         const serviciosTodo = await getServicios()
+        console.log(serviciosTodo)
         const agregrandoMarcado = serviciosTodo.map(todo => {
             return {
                 ...todo,

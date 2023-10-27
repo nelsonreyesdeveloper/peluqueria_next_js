@@ -21,7 +21,7 @@ const ServiciosLayout = ({ children }) => {
       </div>
       <div className='basis-9/12 sm:h-screen sm:overflow-scroll'>
 
-        <div className='bg-black pt-2'>
+        <div className='bg-black pt-2 lg:fixed lg:w-9/12 lg:z-[100] '>
           <div className='w-[95%] flex flex-col md:flex-row  mx-auto justify-between'>
             <p className='text-center font-bold  md:mb-0 text-white'>Bienvenido: <span className='font-light capitalize'> {user?.name}</span></p>
             <button onClick={() => { marcarEstadoAceroTodos(); setServicios([]); logout(); }} className='tex-center hidden lg:block text-white font-bold uppercase hover:text-sky-600 '>Cerrar Sesion</button>
@@ -32,8 +32,10 @@ const ServiciosLayout = ({ children }) => {
             <Link className={`${path == "/nueva-cita" ? 'font-bold text-sky-500 underline underline-offset-8 decoration-4 decoration-skype-300  ' : 'font-medium text-white'} uppercase `} href={"/nueva-cita"}>Nueva Cita</Link>
           </div>
         </div>
+        <div className="lg:mt-24">
+          {children}
 
-        {children}
+        </div>
       </div>
 
     </div>
