@@ -24,7 +24,6 @@ export const useAuth = ({ middleware, url }) => {
             if (err.response.status !== 403) throw new Error(err?.response?.data?.errors);
             setEmail(err.response.data[0]);
             navigate.push("/verify-email");
-            console.log(email);
             if (updatedEmail <= 2) {
                 mutate('/api/user');
                 setUpdatedEmail(updatedEmail + 1);
