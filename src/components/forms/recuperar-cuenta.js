@@ -15,7 +15,6 @@ const RecuperarCuentaJS = () => {
 
     const submitForm = event => {
         event.preventDefault()
-        console.log(email)
         forgotPassword({ email, setErrors, setStatus })
     }
 
