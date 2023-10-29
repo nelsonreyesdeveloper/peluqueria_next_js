@@ -108,6 +108,37 @@ export const useAuth = ({ middleware, url }) => {
         }
     }
 
+    const forgotPassword = async ({ setErrors, setStatus, email }) => {
+        setLoading(true);
+        setErrors([])
+        setStatus(null)
+        try {
+            const res = await clienteAxios.post('/api/forgot-password', { email })
+            const data = await res.data
+            setStatus(data.message)
+        } catch (error) {
+            setLoading(false);
+            const errores = Object.values(error.response.data.errors);
+            setErrors(errores);
+        }
+
+    }
+
+    const NewPasswordPost = async ({ data: newpass, setErrors, setStatus }) => {
+        setLoading(true);
+        setErrors([])
+        setStatus(null)
+        try {
+            const res = await clienteAxios.post(`/api/reset-password`, newpass)
+            const data = await res.data
+            setStatus(data.message)
+        } catch (error) {
+            setLoading(false);
+            const errores = Object.values(error.response.data.errors);
+            setErrors(errores);
+        }
+    }
+
     useEffect(() => {
         if (middleware === "auth" && user && user.admin === 0) {
             if ((url === "/nueva-cita" || url == "/mis-citas")) {
@@ -141,6 +172,8 @@ export const useAuth = ({ middleware, url }) => {
         token,
         loading,
         email,
+        forgotPassword,
+        NewPasswordPost
 
     }
 }

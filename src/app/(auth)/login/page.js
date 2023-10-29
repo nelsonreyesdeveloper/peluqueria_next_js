@@ -22,15 +22,18 @@ export default function AuthenticationPage() {
                         </p>
                     </div>
                     <UserAuthForm />
-                    <p className="px-8 text-center text-sm text-muted-foreground">
-                        Si no tienes una cuenta puedes registrarte aqui {"-> "}
+                    <div className="flex flex-col gap-y-3 lg:gap-0 lg:flex-row lg:justify-between text-gray-500 ">
+
                         <Link
                             href="/register"
                             className="underline underline-offset-4 hover:text-primary"
                         >
                             Registrarme
                         </Link>{" "}
-                    </p>
+
+                        <Link className="underline  underline-offset-4 hover:text-primary" href={"/recuperar-cuenta"}>Olvide mi contraseña</Link>
+                    </div>
+
                 </div>
             </div>
         </>

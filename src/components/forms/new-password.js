@@ -1,6 +1,5 @@
 "use client"
-
-import * as React from "react"
+import React from 'react'
 import { cn } from "@/lib/utils"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
@@ -8,19 +7,18 @@ import { Label } from "../ui/label"
 import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
 import { useAuth } from "@/hooks/authHook"
-import { Blocks } from "react-loader-spinner"
-
-export function RegisterAuthForm({ className, ...props }) {
-
-    const { register, loading } = useAuth({ middleware: 'guest', url: '/mis-citas' })
-
-    // const [isLoading, setIsLoading] = useState(false)
-    const [name, setName] = useState('')
+import { useRouter, useSearchParams } from 'next/navigation'
+const NewPassword = ({ className, ...props }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const [errors, setErrors] = useState([])
+    const [status, setStatus] = useState(null)
+    const searchParams = useSearchParams()
+    const token = searchParams.get('token')
+    const router = useRouter()
 
+    const { NewPasswordPost } = useAuth({ middleware: 'guest', url: '/mis-citas' })
     useEffect(() => {
         if (errors.length > 0) {
             errors.forEach((error, index) => {
@@ -29,47 +27,51 @@ export function RegisterAuthForm({ className, ...props }) {
         }
     }, [errors])
 
+    useEffect(() => {
+        if (status !== null) {
+            toast.success("Contraseña Actualizada")
+            setTimeout(() => {
+                router.push('/login')
+            }, 3000);
+        }
+    }, [status])
+
+
     async function onSubmit(event) {
 
         event.preventDefault()
-        if (loading === true) {
-            return
-        }
 
-        if ([email, password, passwordConfirmation, name].includes("")) {
+
+        if ([email, password, passwordConfirmation].includes("")) {
             setErrors([["Todos los campos son obligatorios"]])
             return
         }
         setErrors([])
 
+        if (token === null || token === undefined || token === "") {
+            setErrors([["Token no valido"]])
+            return
+        }
+
         const data = {
+            token: token,
             email,
             password,
             password_confirmation: passwordConfirmation,
-            name
         }
 
-        register(data, setErrors);
+
+
+        NewPasswordPost({ data, setErrors, setStatus });
     }
 
     return (
         <div className={cn("grid gap-6", className)} {...props}>
 
             <form onSubmit={onSubmit}>
-
+                <legend className='my-4 text-center font-bold text-xl uppercase'>Establecer Nueva Contraseña</legend>
 
                 <div className="grid gap-2">
-
-                    <div className="grid gap-1 mb-2">
-                        <Label htmlFor="name">Nombre</Label>
-                        <Input
-                            id="name"
-                            placeholder="ej: Raul Alejandro Gomez Garcia"
-                            type="text"
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-
 
                     <div className="grid gap-1 mb-2">
                         <Label htmlFor="email">Email</Label>
@@ -81,6 +83,7 @@ export function RegisterAuthForm({ className, ...props }) {
                             autoComplete="email"
                             autoCorrect="off"
                             onChange={(e) => setEmail(e.target.value)}
+                            value={email}
                         />
                     </div>
 
@@ -108,39 +111,26 @@ export function RegisterAuthForm({ className, ...props }) {
                         />
                     </div>
 
-                    <div className="flex justify-center">
-                        {
-                            loading && (
-                                <Blocks
-                                    visible={true}
-                                    height="35"
-                                    width="35"
-                                    ariaLabel="blocks-loading"
-                                    wrapperStyle={{}}
-                                    wrapperClass="blocks-wrapper"
-                                />
+                    <div className='my-2'>
+                        <p className='text-green-600 font-medium italic'>{
+                            status && (
+                                status
                             )
-                        }
+                        }</p>
                     </div>
+
+
                     <Button>
                         {/* {isLoading && (
                             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                         )} */}
-                        Registrarme
+                        Establecer Nueva Contraseña
                     </Button>
                 </div>
             </form>
-            {/* <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                        Or continue with
-                    </span>
-                </div>
-            </div> */}
 
         </div>
     )
 }
+
+export default NewPassword
