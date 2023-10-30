@@ -13,12 +13,15 @@ import Hero from "@/components/landing/hero";
 import { ThemeProvider } from "next-themes";
 
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 const Home = () => {
   const path = usePathname();
   const redirect = useRouter();
-  if(path == "/"){
-    redirect.push("/nueva-cita")
-  };
+  useEffect(() => {
+    if (path == "/") {
+      redirect.push("/nueva-cita")
+    };
+  }, [])
   return (
 
     <div className="xl:w-[95%] xl:mx-auto">
