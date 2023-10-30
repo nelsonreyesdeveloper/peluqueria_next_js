@@ -11,16 +11,19 @@ import PopupWidget from "@/components/landing/popupWidget";
 import Navbar from "@/components/landing/navbar";
 import Hero from "@/components/landing/hero";
 import { ThemeProvider } from "next-themes";
-import { useRouter } from "next/navigation";
 
+import { usePathname, useRouter } from "next/navigation";
 const Home = () => {
- const router = useRouter();
- router.push("/login");
+  const path = usePathname();
+  const redirect = useRouter();
+  if(path == "/"){
+    redirect.push("/nueva-cita")
+  };
   return (
 
     <div className="xl:w-[95%] xl:mx-auto">
 
-      <ThemeProvider attribute="class">
+      <ThemeProvider >
 
         <ThemeProvider>
           <Navbar />
