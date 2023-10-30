@@ -3,8 +3,7 @@ import { formatearFecha } from '@/helpers/formatearFecha'
 import React from 'react'
 
 const CitasCliente = ({ cita }) => {
-    const { id, fecha_cita, hora_cita, total, servicios } = cita
-
+    const { id, fecha_cita, hora_cita, servicios, factura } = cita
     return (
         <div className='bg-slate-100 p-3 rounded-lg flex flex-col justify-between'>
             <div>
@@ -30,7 +29,7 @@ const CitasCliente = ({ cita }) => {
                                 </div>
                                 {
                                     index == servicios.length -1 && (
-                                        <div className='flex justify-end font-bold my-2 uppercase '>Total: <span className='ml-1 font-normal'>{formatearDinero(total)}</span> </div>
+                                        <div className='flex justify-end font-bold my-2 uppercase '>Total: <span className='ml-1 font-normal'>{formatearDinero(factura.total)}</span> </div>
                                     )
                                 }
                             </div>

@@ -11,7 +11,7 @@ const CitaAdmin = ({ cita }) => {
         <div>
           <div className='flex gap-x-4 border-b-2 border-black justify-between' >
             <p className="text-base sm:text-xl font-bold uppercase mb-1 text-center" >Hora: <span className='font-normal'>{cita.hora_cita}</span> </p>
-            <p className="text-base sm:text-xl font-bold uppercase text-center">Total: <span className='font-medium '>{formatearDinero(cita.total)}</span> </p>
+            <p className="text-base sm:text-xl font-bold uppercase text-center">Total: <span className='font-medium '>{formatearDinero(cita.factura.total)}</span> </p>
           </div>
           <div>
             <p className='font-bold uppercase my-3'>Cliente: <span className='font-normal capitalize'>{cita.user.name}</span> </p>

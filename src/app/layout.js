@@ -4,6 +4,7 @@ import { Inter, Roboto, ADLaM_Display } from 'next/font/google'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className + ' ' + roboto.className}>
         <PeluqueriaProvider>
+
           {children}
         </PeluqueriaProvider>
         <ToastContainer></ToastContainer>

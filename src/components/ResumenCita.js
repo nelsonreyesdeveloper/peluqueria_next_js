@@ -3,6 +3,7 @@ import { usePeluqueriaContext } from "@/context/PeluqueriaProvider"
 import { formatearDinero } from "@/helpers/formatearDinero"
 import { formatearFecha } from "@/helpers/formatearFecha"
 import { useState } from "react"
+import PaymentPage from "./PaypalButtons"
 
 
 export const ResumenCita = () => {
@@ -65,9 +66,10 @@ export const ResumenCita = () => {
                                     <p className="uppercase text-lg   font-black text-center">Total a pagar: {formatearDinero(servicios.reduce((a, c) => a + c.precio * c.cantidad, 0))}</p>
 
                                     <div className="mt-5 flex flex-col w-full">
-                                        <button disabled={disabledButton} onClick={() => { setDisabledButton(true); setTimeout(() => { setDisabledButton(false) }, 5000); handleConfirmarCita(); }} className={`w-full bg-green-500 ${disabledButton ? 'cursor-not-allowed opacity-10' : ''} hover:bg-green-700 uppercase text-white font-bold py-2 px-4 rounded`}>
-                                            Confirmar Cita
+                                        <button disabled={disabledButton} onClick={() => { setDisabledButton(true); setTimeout(() => { setDisabledButton(false) }, 5000); handleConfirmarCita(1); }} className={`w-full bg-green-500 ${disabledButton ? 'cursor-not-allowed opacity-10' : ''} hover:bg-green-700 uppercase text-white font-bold  h-12 py-2 px-4 rounded mb-4`}>
+                                            Pago en efectivo
                                         </button>
+                                        <PaymentPage></PaymentPage>
 
                                     </div>
                                 </div>

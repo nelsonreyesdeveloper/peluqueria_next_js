@@ -17,6 +17,11 @@ export const PeluqueriaProvider = ({ children }) => {
     const [servicioModal, setServicioModal] = useState({})
     const [todosServicios, setTodosServicios] = useState([])
     const [nuevoPedido, setNuevoPedido] = useState(false);
+    const [total, setTotal] = useState(0)
+
+    useEffect(() => {
+        setTotal(servicios.reduce((total, servicio) => total + servicio.precio * servicio.cantidad, 0))
+    }, [servicios])
 
     /* Obtener fecha actual de ahora */
     const date = new Date(); // Obtiene la fecha y hora actual en la zona horaria local
@@ -28,7 +33,7 @@ export const PeluqueriaProvider = ({ children }) => {
     const [hora, setHora] = useState('')
 
     const router = useRouter();
-    
+
     const getServiciosLoader = async () => {
         const serviciosTodo = await getServicios()
         const agregrandoMarcado = serviciosTodo.map(todo => {
@@ -131,7 +136,17 @@ export const PeluqueriaProvider = ({ children }) => {
         }
     }
 
-    const handleConfirmarCita = async () => {
+    const limpiarForm = () => {
+        router.push("/mis-citas");
+        setMostrarTabs(1)
+        setServicios([])
+        setFecha(formattedDate)
+        setHora('')
+        marcarEstadoAceroTodos();
+        toast.success("Cita Realizada con exito");
+    }
+
+    const handleConfirmarCita = async (metodo) => {
 
         const citaPost = {
             fecha_cita: detallesCita.fecha,
@@ -142,6 +157,7 @@ export const PeluqueriaProvider = ({ children }) => {
         const servicios_with_subtotal = servicios.map(servicio => ({ ...servicio, subtotal: servicio.precio * servicio.cantidad }));
         try {
             const res = await clienteAxios.post('/api/citas', {
+                metodo,
                 citaPost,
                 servicios: servicios_with_subtotal
             },
@@ -151,22 +167,19 @@ export const PeluqueriaProvider = ({ children }) => {
                     },
                 }
             );
-            marcarEstadoAceroTodos();
-            toast.success("Cita Realizada con exito");
-            setServicios([])
-            setFecha(formattedDate)
-            setHora('')
-            setMostrarTabs(1)
 
-            router.push("/mis-citas");
+            if (metodo == 1) {
+                limpiarForm()
+            }
+            return 200
             // document.querySelector('#fecha').value = '';
             // document.querySelector('#react-select-hora-input').value = '';
-            const data = await res.data;
 
         } catch (error) {
             if (error.response.status !== 400) throw new Error(error);
             toast.error(error.response.data.data)
-            
+            return error.response.status
+
         }
 
     }
@@ -284,7 +297,9 @@ export const PeluqueriaProvider = ({ children }) => {
         handleDeleteCitaResumenCita,
         marcarEstadoAceroTodos,
         getServiciosLoader,
-        hora
+        hora,
+        total,
+        limpiarForm
     }
     return <peluqueriaContext.Provider value={values}>{children}</peluqueriaContext.Provider>
 
