@@ -14,7 +14,8 @@ import { ThemeProvider } from "next-themes";
 import { useRouter } from "next/navigation";
 
 const Home = () => {
-  window.location.href = "https://peluqueria-next-js.vercel.app/login";
+ const router = useRouter();
+ router.push("/login");
   return (
 
     <div className="xl:w-[95%] xl:mx-auto">
