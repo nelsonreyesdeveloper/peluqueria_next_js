@@ -15,10 +15,14 @@ const Navbar = () => {
     setUserIndex(user)
   }, [user])
 
-  const decision = typeof userIndex === "object" ? ["Mis Citas", "/mis-citas", "active"] : ["Iniciar Sesion", "/login", "active"];
+
+  const decision = typeof userIndex === "object" ? ["Gestionar Citas", "/mis-citas", "active"] : ["Haz tu Cita YA!", "/login", "active"];
+  const array = [
+    decision,
+  ]
   const navigation = [
     ["Inicio", "/"],
-    decision
+    ["Servicios", "/#servicios"],
 
   ];
 
@@ -71,13 +75,21 @@ const Navbar = () => {
                 <Disclosure.Panel className="flex flex-wrap w-full my-5 lg:hidden">
                   <>
                     {navigation.map((item, index) => (
-                      <Link key={index}  href={item[1]} className={` ${item[2] === "active" ? "underline decoration-2 underline-offset-4 font-bold text-indigo-600" : ""} w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none`}>
+                      <Link key={index} href={item[1]} className={` ${item[2] === "active" ? "underline decoration-2 underline-offset-4 font-bold text-indigo-600" : ""} w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none`}>
                         {item[0]}
                       </Link>
                     ))}
-                    <Link href="#servicios" className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5">
-                      Ver Servicios
-                    </Link>
+
+
+                    {
+                      array.map((item, index) => (
+                        <Link href={item[1]} className="w-full px-6 py-2 mt-3 text-center text-white font-bold uppercase bg-fuchsia-600 rounded-md lg:ml-5">
+                          {item[0]}
+                        </Link>
+                      ))
+                    }
+
+
                   </>
                 </Disclosure.Panel>
               </div>
@@ -93,16 +105,22 @@ const Navbar = () => {
             <ul className="items-center justify-end flex-1 pt-6 list-none lg:pt-0 lg:flex">
               {navigation.map((menu, index) => (
                 <li className="mr-3 nav__item" key={index}>
-                  <Link href={menu[1]}  className={` ${menu[2] === "active" ? "underline decoration-2 underline-offset-4 font-bold text-indigo-600" : ""} w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none`}>
+                  <Link href={menu[1]} className={` ${menu[2] === "active" ? "underline bg-fuchsia-700 decoration-2 underline-offset-4 font-bold text-white h-full hover:bg-fuchsia-800 hover:text-white" : ""} w-full px-6 py-2 -ml-4  rounded-md  hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none`}>
                     {menu[0]}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
-          <Link href="#servicios" className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5">
-            Ver Servicios
-          </Link>
+
+          {
+            array.map((item, index) => (
+              <Link href={item[1]} className="px-6 py-2 text-white font-bold uppercase bg-fuchsia-700 rounded-md md:ml-5">
+                {item[0]}
+              </Link>
+            ))
+          }
+
 
         </div>
       </nav>
