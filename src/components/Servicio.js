@@ -3,18 +3,17 @@ import { formatearDinero } from '@/helpers/formatearDinero'
 import { useEffect, useState } from 'react'
 import { usePeluqueriaContext } from '@/context/PeluqueriaProvider'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
 import Swal from 'sweetalert2'
 import Modal from 'react-modal';
 import withReactContent from 'sweetalert2-react-content'
 import modalStyles from '@/partials/modalStyles'
 import ModalServicioAdmin from './ModalServicioAdmin'
-
+import { usePathname } from 'next/navigation'
 
 Modal.setAppElement('body');
 
 const Servicio = ({ servicio, admin = false }) => {
-
+    const path = usePathname()
     const MySwal = withReactContent(Swal)
     /*extrayendo setServicio  */
 
@@ -55,6 +54,7 @@ const Servicio = ({ servicio, admin = false }) => {
                 (admin || estado === 1) && (
                     <div aria-label='servicios' onClick={() => {
                         if (admin) return
+                        if (path === "/") return
                         handleAgregarServicio(servicio)
                     }} className={` z-50 w-full  ${marcado ? 'bg-sky-900' : 'hover:bg-sky-100'}   hover:scale-105 transition-all group   border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700`}>
 

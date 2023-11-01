@@ -11,17 +11,15 @@ import PopupWidget from "@/components/landing/popupWidget";
 import Navbar from "@/components/landing/navbar";
 import Hero from "@/components/landing/hero";
 import { ThemeProvider } from "next-themes";
+import Servicio from "@/components/Servicio";
+import { usePeluqueriaContext } from "@/context/PeluqueriaProvider";
+import { usePathname } from "next/navigation";
+import Alerta from "@/components/Alerta";
 
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
 const Home = () => {
-  const path = usePathname();
-  const redirect = useRouter();
-  useEffect(() => {
-    if (path == "/") {
-      redirect.push("/nueva-cita")
-    };
-  }, [])
+  const { todosServicios } = usePeluqueriaContext()
+
+
   return (
 
     <div className="xl:w-[95%] xl:mx-auto">
@@ -31,46 +29,41 @@ const Home = () => {
         <ThemeProvider>
           <Navbar />
           <Hero />
-          <SectionTitle
-            pretitle="Nextly Benefits"
-            title=" Why should you use this landing page">
-            Nextly is a free landing page & marketing website template for startups
-            and indie projects. Its built with Next.js & TailwindCSS. And its
-            completely open-source.
-          </SectionTitle>
-          <Benefits data={benefitOne} />
-          <Benefits imgPos="right" data={benefitTwo} />
-          <SectionTitle
-            pretitle="Watch a video"
-            title="Learn how to fullfil your needs">
-            This section is to highlight a promo or demo video of your product.
-            Analysts says a landing page with video has 3% more conversion rate. So,
-            don&apos;t forget to add one. Just like this.
-          </SectionTitle>
-          <Video />
-          <SectionTitle
-            pretitle="Testimonials"
-            title="Here's what our customers said">
-            Testimonails is a great way to increase the brand trust and awareness.
-            Use this section to highlight your popular customers.
-          </SectionTitle>
-          <Testimonials />
-          <SectionTitle pretitle="FAQ" title="Frequently Asked Questions">
-            Answer your customers possible questions here, it will increase the
-            conversion rate as well as support or chat requests.
-          </SectionTitle>
-          <Faq />
-          <Cta />
+          <div id="servicios">
+            <SectionTitle
+              title="NUESTROS SERVICIOS">
+            </SectionTitle>
+
+            <div
+              className={` ${todosServicios.length !== 0 ? 'grid w-[95%]  mx-auto sm:grid-cols-2 lg:grid-cols-3 gap-5 my-5' : ''}`}>
+              {
+
+                todosServicios.length !== 0 ? (
+                  todosServicios.length !== 0 ? todosServicios.map(servicio => {
+                    return (
+                      <Servicio key={servicio.id} servicio={servicio}>
+
+                      </Servicio>
+                    )
+                  })
+                    : (
+                      <Alerta><p className="bg-red-100 text-center border-l-4 border-red-500 text-red-700 p-4">No hay Servicios</p></Alerta>
+                    )
+
+                ): (
+                  <Alerta><p className=" text-center ">Cargando....</p></Alerta>
+                )
+              }
+            </div>
+
+          </div>
+
           <Footer />
-          <PopupWidget />
+          {/* <PopupWidget /> */}
 
         </ThemeProvider>
       </ThemeProvider>
     </div>
-
-
-
-
 
   );
 }
