@@ -71,7 +71,7 @@ const Navbar = () => {
                 <Disclosure.Panel className="flex flex-wrap w-full my-5 lg:hidden">
                   <>
                     {navigation.map((item, index) => (
-                      <Link key={index} href={item[1]} className={` ${item[2] === "active" ? "underline decoration-2 underline-offset-4 font-bold text-indigo-600" : ""} w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none`}>
+                      <Link key={index}  href={item[1]} className={` ${item[2] === "active" ? "underline decoration-2 underline-offset-4 font-bold text-indigo-600" : ""} w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none`}>
                         {item[0]}
                       </Link>
                     ))}
@@ -93,7 +93,7 @@ const Navbar = () => {
             <ul className="items-center justify-end flex-1 pt-6 list-none lg:pt-0 lg:flex">
               {navigation.map((menu, index) => (
                 <li className="mr-3 nav__item" key={index}>
-                  <Link href={menu[1]} className={` ${menu[2] === "active" ? "underline decoration-2 underline-offset-4 font-bold text-indigo-600" : ""} w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none`}>
+                  <Link href={menu[1]}  className={` ${menu[2] === "active" ? "underline decoration-2 underline-offset-4 font-bold text-indigo-600" : ""} w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none`}>
                     {menu[0]}
                   </Link>
                 </li>

@@ -47,7 +47,7 @@ export default function Footer() {
           <div>
             <div className="flex flex-wrap w-full -mt-2 -ml-3 lg:ml-0">
               {legal.map((item, index) => (
-                <Link key={index} href="/" className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700">
+                <Link key={index} href="/" className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500  hover:cursor-not-allowed focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700">
                   {item}
                 </Link>
               ))}
@@ -55,15 +55,15 @@ export default function Footer() {
           </div>
           <div className="">
             <div>Siguenos</div>
-            <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500">
+            <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500  hover:cursor-not-allowed">
 
-              <a
+              {/* <a
                 href="https://facebook.com/web3templates"
                 target="_blank"
                 rel="noopener">
-                <span className="sr-only">Facebook</span>
-                <Facebook />
-              </a>
+              </a> */}
+              <span className="sr-only">Facebook</span>
+              <Facebook />
 
             </div>
           </div>
