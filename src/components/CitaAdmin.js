@@ -3,7 +3,6 @@ import { formatearDinero } from '@/helpers/formatearDinero'
 import React from 'react'
 import { usePeluqueriaContext } from '@/context/PeluqueriaProvider'
 const CitaAdmin = ({ cita }) => {
-
   const { handleDeleteCita, handleChangeStatusCita } = usePeluqueriaContext();
   return (
     <>
@@ -29,7 +28,6 @@ const CitaAdmin = ({ cita }) => {
                       <p className='font-bold uppercase'> X{servicio.pivot.cantidad}</p>
                     </div>
                     <p className='font-bold uppercase'><span className='font-normal capitalize'>{formatearDinero(servicio.pivot.subtotal)} </span> </p>
-
                   </div>
 
                 </div>
@@ -39,10 +37,24 @@ const CitaAdmin = ({ cita }) => {
 
           </div>
         </div>
-        <div className='flex flex-col mt-5 md:flex-row md:justify-between'>
-          <button onClick={() => { handleDeleteCita(cita.id) }} className='font-bold mb-2 bg-red-700 p-2 rounded text-white uppercase' >Eliminar</button>
-          <button onClick={() => { handleChangeStatusCita(cita.id) }} className='uppercase mb-2 bg-indigo-700 p-2 rounded text-white font-bold' >Despachar</button>
+        <div>
+          <div>
+            <p className='font-bold uppercase mt-2'>Metodo Pago: <span className='font-normal capitalize'>
+              {
+                cita.factura.metodo.map((metodo) => (
+                  <span key={metodo.id}>{metodo.nombre}</span>
+                ))
+              }
+            </span> </p>
+            <p className='font-bold uppercase mt-2'>Estado de Pago: <span className='font-normal capitalize'>{cita.factura.pagada ? 'Pago Realizado' : 'Pago Pendiente'} </span> </p>
+          </div>
+          <div className='flex flex-col mt-5 md:flex-row md:justify-between'>
+
+            <button onClick={() => { handleDeleteCita(cita.id) }} className='font-bold mb-2 bg-red-700 p-2 rounded text-white uppercase' >Eliminar</button>
+            <button onClick={() => { handleChangeStatusCita({ cita: cita.id, factura: cita.factura.id }) }} className='uppercase mb-2 bg-indigo-700 p-2 rounded text-white font-bold' >Despachar</button>
+          </div>
         </div>
+
       </div>
     </>
   )

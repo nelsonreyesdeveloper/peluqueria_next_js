@@ -4,6 +4,9 @@ import React from 'react'
 
 const CitasCliente = ({ cita }) => {
     const { id, fecha_cita, hora_cita, servicios, factura } = cita
+
+
+
     return (
         <div className='bg-slate-100 p-3 rounded-lg flex flex-col justify-between'>
             <div>
@@ -11,7 +14,7 @@ const CitasCliente = ({ cita }) => {
                     <p className="text-base sm:text-lg font-bold uppercase text-center ">Fecha: <span className='font-medium '>{formatearFecha(fecha_cita)}</span> </p>
                     <p className="text-base sm:text-lg font-bold uppercase mb-1 text-center" >Hora: <span className='font-normal'>{hora_cita}</span> </p>
                 </div>
-             
+
 
                 <div>
                     {
@@ -27,19 +30,31 @@ const CitasCliente = ({ cita }) => {
                                     <p className='font-bold uppercase whitespace-nowrap'>Subtotal: <span className='font-normal capitalize '> {formatearDinero(servicio.pivot.subtotal)} </span> </p>
 
                                 </div>
-                                {
-                                    index == servicios.length -1 && (
-                                        <div className='flex justify-end font-bold my-2 uppercase '>Total: <span className='ml-1 font-normal'>{formatearDinero(factura.total)}</span> </div>
-                                    )
-                                }
+
                             </div>
 
                         ))
                     }
 
+
                 </div>
             </div>
-            <div className='flex flex-col mt-5 md:flex-row md:justify-between'>
+            <div className='flex flex-col'>
+
+                <div className='my-4 flex flex-col items-start'>
+
+                    <div className='flex justify-end font-bold  uppercase '>Metodo de Pago:
+                        {
+                            factura.metodo.map((metodo) => {
+                                return (
+                                    <span className='ml-1 font-normal' key={metodo.id}>{metodo.nombre}</span>
+                                )
+                            })
+                        }
+                    </div>
+                    <div className='flex justify-end font-bold  uppercase '>Estado Pago: <span className='ml-1 font-normal'>{factura.pagada == 0 ? 'Pago Pendiente' : 'Pago Realizado'}</span> </div>
+                    <div className='flex justify-end font-bold  uppercase '>Total: <span className='ml-1 font-normal'>{formatearDinero(factura.total)}</span> </div>
+                </div>
                 {/* <button onClick={() => { handleDeleteCita(cita.id) }} className='font-bold mb-2 bg-red-700 p-2 rounded text-white uppercase' >Eliminar</button>
                 <button onClick={() => { handleChangeStatusCita(cita.id) }} className='uppercase mb-2 bg-indigo-700 p-2 rounded text-white font-bold' >Despachar</button> */}
             </div>

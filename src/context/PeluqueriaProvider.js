@@ -200,9 +200,12 @@ export const PeluqueriaProvider = ({ children }) => {
             toast.error(error?.response?.data?.data)
         }
     }
-    const handleChangeStatusCita = async (id) => {
+    const handleChangeStatusCita = async ({cita,factura}) => {
+
         try {
-            const res = await clienteAxios.put(`/api/citas/${id}`, null, {
+            const res = await clienteAxios.put(`/api/citas/${cita}`, {
+                factura:factura
+            }, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('token')}`
                 },
